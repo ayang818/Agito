@@ -20,6 +20,7 @@ public class HelloServlet extends javax.servlet.http.HttpServlet {
         DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = dateformat.format(System.currentTimeMillis());
         req.setAttribute("currentTime", currentTime);
+        System.out.println("nono no");
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/hello.jsp");
         requestDispatcher.forward(req, res);
     }

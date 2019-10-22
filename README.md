@@ -1,5 +1,5 @@
 # myspring
-自制spring框架
+更加精简的JavaWeb框架
 
 ## Feature
 - [ ] 加载并读取配置文件
