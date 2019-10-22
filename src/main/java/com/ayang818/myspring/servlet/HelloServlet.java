@@ -1,7 +1,5 @@
 package com.ayang818.myspring.servlet;
 
-import org.apache.logging.log4j.spi.LoggerContextFactory;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -22,7 +20,6 @@ public class HelloServlet extends javax.servlet.http.HttpServlet {
         DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = dateformat.format(System.currentTimeMillis());
         req.setAttribute("currentTime", currentTime);
-
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/hello.jsp");
         requestDispatcher.forward(req, res);
     }
