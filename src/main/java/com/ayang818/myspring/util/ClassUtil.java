@@ -23,11 +23,11 @@ import java.util.jar.JarFile;
 public class ClassUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtil.class);
 
-    public static ClassLoader getClassLoader() {
+    private static ClassLoader getClassLoader() {
         return Thread.currentThread().getContextClassLoader();
     }
 
-    public static Class<?> loadClass(String className, boolean initial) {
+    private static Class<?> loadClass(String className, boolean initial) {
         Class<?> cls;
         try {
             cls = Class.forName(className, initial, getClassLoader());
@@ -72,7 +72,7 @@ public class ClassUtil {
         } catch (IOException e) {
             LOGGER.error("get classSet failed", e);
         }
-        return null;
+        return classSet;
     }
 
     private static void addClass(Set<Class<?>> classSet, String className) {
@@ -103,11 +103,5 @@ public class ClassUtil {
                 addClass(classSet, subPackagePath, subPackageName);
             }
         }
-    }
-
-    public static void main(String[] args) {
-        String basePackageName = ConfigHelper.getBasePackageName();
-        System.out.println(basePackageName);
-        getClassSet("/");
     }
 }
