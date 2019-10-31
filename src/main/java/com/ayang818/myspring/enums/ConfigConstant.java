@@ -1,4 +1,4 @@
-package com.ayang818.myspring.util;
+package com.ayang818.myspring.enums;
 
 public interface ConfigConstant {
     String CONFIG_FILE = "myspring.properties";

@@ -9,6 +9,7 @@ import java.util.Set;
 
 public final class ClassHelper {
     private static final Set<Class<?>> CLASS_SET;
+
     static {
         String basePackageName = ConfigHelper.getBasePackageName();
         CLASS_SET = ClassUtil.getClassSet(basePackageName);

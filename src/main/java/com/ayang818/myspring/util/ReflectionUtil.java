@@ -24,8 +24,8 @@ public class ReflectionUtil {
     public static Object newInstance(Class<?> cls, Class<?> ...args) {
         Object instance = null;
         try {
-            instance = cls.getDeclaredConstructor(args);
-        } catch (NoSuchMethodException e) {
+            instance = cls.getDeclaredConstructor().newInstance(args);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return instance;

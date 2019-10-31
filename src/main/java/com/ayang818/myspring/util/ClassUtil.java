@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URL;
@@ -27,10 +26,10 @@ public class ClassUtil {
         return Thread.currentThread().getContextClassLoader();
     }
 
-    private static Class<?> loadClass(String className, boolean initial) {
+    private static Class<?> loadClass(String className, boolean isInitial) {
         Class<?> cls;
         try {
-            cls = Class.forName(className, initial, getClassLoader());
+            cls = Class.forName(className, isInitial, getClassLoader());
         } catch (ClassNotFoundException e) {
             LOGGER.error(className + " class not found");
             throw new RuntimeException(e);
@@ -49,7 +48,7 @@ public class ClassUtil {
                     String protocol = node.getProtocol();
                     if ("files".equals(protocol)) {
                         String packagePath = node.getPath().replaceAll("%20", " ");
-                        addClass(classSet, packagePath, packageName);
+                        addClasses(classSet, packagePath, packageName);
                     } else if("jar".equals(protocol)) {
                         JarURLConnection jarURLConnection = (JarURLConnection) node.openConnection();
                         if (jarURLConnection != null) {
@@ -77,12 +76,12 @@ public class ClassUtil {
 
     private static void addClass(Set<Class<?>> classSet, String className) {
         Class<?> cls = loadClass(className, false);
-        System.out.println(cls.getName());
+        LOGGER.info("add "+className+" to classSet");
         classSet.add(cls);
     }
 
-    private static void addClass(Set<Class<?>> classSet, String packagePath, String packageName) {
-        File[] files = new File(packageName).listFiles(file -> (file.isFile() && file.getName().endsWith(".class")) || file.isDirectory());
+    private static void addClasses(Set<Class<?>> classSet, String packagePath, String packageName) {
+        File[] files = new File(packagePath).listFiles(file -> (file.isFile() && file.getName().endsWith(".class")) || file.isDirectory());
         for (File file : files) {
             String filename = file.getName();
             if (file.isFile()) {
@@ -90,18 +89,19 @@ public class ClassUtil {
                 if (!className.isEmpty()) {
                     className = packageName + "." + className;
                 }
-                addClass(classSet, className);
-            } else {
-                String subPackagePath = filename;
-                if (!packagePath.isEmpty()) {
-                    subPackagePath = packagePath+"/"+subPackagePath;
-                }
-                String subPackageName = filename;
+                doAddClass(classSet, className);
+            } else if (file.isDirectory()) {
+                String newPackagePath = packagePath+"/"+filename;
                 if (!packageName.isEmpty()) {
-                    subPackageName = packageName+"."+subPackageName;
+                    filename = packageName+"."+filename;
                 }
-                addClass(classSet, subPackagePath, subPackageName);
+                addClasses(classSet, newPackagePath, filename);
             }
         }
+    }
+
+    private static void doAddClass(Set<Class<?>> classSet, String className) {
+        Class<?> aClass = loadClass(className, false);
+        classSet.add(aClass);
     }
 }
