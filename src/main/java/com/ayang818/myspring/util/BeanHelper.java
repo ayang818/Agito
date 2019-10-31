@@ -12,6 +12,7 @@ public final class BeanHelper {
         Set<Class<?>> beanClassSet = ClassHelper.getBeanClassSet();
         for (Class<?> aClass : beanClassSet) {
             Object object = ReflectionUtil.newInstance(aClass);
+            // 将实例放入beanMap中
             BEAN_MAP.put(aClass, object);
         }
     }
