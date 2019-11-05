@@ -1,6 +1,7 @@
 package com.ayang818.myspring.helper;
 
 import com.ayang818.myspring.annotation.Action;
+import com.ayang818.myspring.annotation.Bean;
 import com.ayang818.myspring.annotation.Controller;
 import com.ayang818.myspring.annotation.Service;
 import com.ayang818.myspring.util.ClassUtil;
@@ -47,9 +48,19 @@ public final class ClassHelper {
     }
 
     public static Set<Class<?>> getBeanClassSet() {
+        Set<Class<?>> beanSet = new HashSet<>();
+        for (Class<?> aClass : CLASS_SET) {
+            aClass.isAnnotationPresent(Bean.class);
+            beanSet.add(aClass);
+        }
+        return beanSet;
+    }
+
+    public static Set<Class<?>> getAutowritedClassSet() {
         HashSet<Class<?>> beanClassSet = new HashSet<>();
         beanClassSet.addAll(getServiceClassSet());
         beanClassSet.addAll(getControllerClassSet());
+        beanClassSet.addAll(getBeanClassSet());
         return beanClassSet;
     }
 }

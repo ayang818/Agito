@@ -11,7 +11,7 @@ public final class BeanHelper {
     private static final Map<Class<?>, Object> BEAN_MAP = new HashMap<>();
 
     static {
-        Set<Class<?>> beanClassSet = ClassHelper.getBeanClassSet();
+        Set<Class<?>> beanClassSet = ClassHelper.getAutowritedClassSet();
         for (Class<?> aClass : beanClassSet) {
             Object object = ReflectionUtil.newInstance(aClass);
             // 将实例放入beanMap中
