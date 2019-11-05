@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @Date 21:01 2019/10/22
  * @Author 杨丰畅
- * @Description //TODO
+ * @Description value值路径，method指http请求方法
  * @Param
  * @Return
  */
@@ -16,4 +16,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
     String value();
+    String method();
 }

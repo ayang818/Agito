@@ -1,6 +1,7 @@
-package com.ayang818.myspring.util;
+package com.ayang818.myspring.helper;
 
 import com.ayang818.myspring.enums.ConfigConstant;
+import com.ayang818.myspring.util.PropsUtil;
 
 import java.util.Properties;
 
