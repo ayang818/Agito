@@ -37,8 +37,11 @@ public class ControllerHelper {
             });
         }
     }
-    public static Map<Request, Handler> getActionMap() {
-        return ACTION_MAP;
+
+
+    public static Handler getHandler(String path, String method) {
+        Request request = new Request(path, method);
+        return ACTION_MAP.get(request);
     }
 
 }

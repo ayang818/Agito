@@ -56,7 +56,7 @@ public final class ClassHelper {
         return beanSet;
     }
 
-    public static Set<Class<?>> getAutowritedClassSet() {
+    public static Set<Class<?>> getAutowiredClassSet() {
         HashSet<Class<?>> beanClassSet = new HashSet<>();
         beanClassSet.addAll(getServiceClassSet());
         beanClassSet.addAll(getControllerClassSet());

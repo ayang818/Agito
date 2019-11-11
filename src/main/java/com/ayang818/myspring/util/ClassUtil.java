@@ -26,7 +26,7 @@ public class ClassUtil {
         return Thread.currentThread().getContextClassLoader();
     }
 
-    private static Class<?> loadClass(String className, boolean isInitial) {
+    public static Class<?> loadClass(String className, boolean isInitial) {
         Class<?> cls;
         try {
             cls = Class.forName(className, isInitial, getClassLoader());
