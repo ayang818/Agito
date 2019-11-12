@@ -5,7 +5,7 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class JsonUtil {
+public class JsonUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
 
     public static String parseEnumToJson(Object object) {

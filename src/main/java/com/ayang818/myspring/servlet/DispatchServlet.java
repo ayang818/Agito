@@ -1,12 +1,11 @@
 package com.ayang818.myspring.servlet;
 
+import com.ayang818.myspring.annotation.responseAnnotation.ResponseBody;
+import com.ayang818.myspring.annotation.responseAnnotation.ResponseView;
 import com.ayang818.myspring.helper.BeanHelper;
 import com.ayang818.myspring.helper.ControllerHelper;
 import com.ayang818.myspring.helper.InitHelper;
-import com.ayang818.myspring.util.CodecUtil;
-import com.ayang818.myspring.util.Handler;
-import com.ayang818.myspring.util.ReflectionUtil;
-import com.ayang818.myspring.util.StreamUtil;
+import com.ayang818.myspring.util.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -80,8 +79,31 @@ public class DispatchServlet extends HttpServlet implements Serviceable {
             // 使用反射调用映射函数
             Param param = new Param(paramMap);
             Method actionMethod = handler.getActionMethod();
-            return ReflectionUtil.invokeMethod(bean, actionMethod, param);
-        }
+            Object result = ReflectionUtil.invokeMethod(bean, actionMethod, param);
+            // 判断返回类型注解注解，返回视图
+            if (actionMethod.isAnnotationPresent(ResponseView.class)) {
+                return viewResponse(result);
+            }
+            // 返回Json数据
+            if (actionMethod.isAnnotationPresent(ResponseBody.class)) {
+                return jsonResponse(result);
+            }
+         }
         return null;
     }
+
+    @Override
+    public String jsonResponse(Object jsonObject) {
+        // 枚举类解析策略
+        if (jsonObject.getClass().isEnum()) {
+            return JsonUtil.parseEnumToJson(jsonObject);
+        }
+        return JsonUtil.parseObjectToJson(jsonObject);
+    }
+
+    @Override
+    public Object viewResponse(Object view) {
+        return null;
+    }
+
 }

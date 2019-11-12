@@ -6,4 +6,6 @@ import java.io.IOException;
 
 public interface Serviceable {
     Object mappingAndInvoke(HttpServletRequest request, HttpServletResponse response) throws IOException;
+    String jsonResponse(Object jsonObject);
+    Object viewResponse(Object view);
 }
