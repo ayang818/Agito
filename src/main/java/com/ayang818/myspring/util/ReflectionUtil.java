@@ -21,7 +21,7 @@ public class ReflectionUtil {
         return instance;
     }
 
-    public static Object newInstance(Class<?> cls, Class<?> ...args) {
+    public static Object newInstance(Class<?> cls, Object[] args) {
         Object instance = null;
         try {
             instance = cls.getDeclaredConstructor().newInstance(args);
@@ -38,7 +38,7 @@ public class ReflectionUtil {
             result = method.invoke(obj, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
             LOGGER.error(method.getName() + " invoke failed");
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
         return result;
     }

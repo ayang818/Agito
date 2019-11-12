@@ -39,10 +39,14 @@ public class DispatchServlet extends HttpServlet implements Serviceable {
         ServletContext servletContext = servletConfig.getServletContext();
         // 注册处理HTML的Servlet
         ServletRegistration htmlServlet = servletContext.getServletRegistration("html");
-        htmlServlet.addMapping(ConfigHelper.getAppHTMLPath() + "*");
+        String appHTMLPath = ConfigHelper.getAppHTMLPath();
+        appHTMLPath = !appHTMLPath.endsWith("/") && !appHTMLPath.endsWith("\\") ? appHTMLPath+"/" : appHTMLPath;
+        htmlServlet.addMapping(appHTMLPath + "*");
         // 注册处理静态资源的Servlet
         ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-        defaultServlet.addMapping(ConfigHelper.getAppAssertPath()+"*");
+        String appAssertPath = ConfigHelper.getAppAssertPath();
+        appAssertPath = !appAssertPath.endsWith("/") && !appAssertPath.endsWith("\\") ? appAssertPath+"/" : appAssertPath;
+        defaultServlet.addMapping(appAssertPath + "*");
     }
 
     @Override
