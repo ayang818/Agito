@@ -35,7 +35,14 @@ public class ConfigHelper {
     }
 
     public static String getClassPath() {
-        return (String) CONFIG_PROPS.get(ConfigConstant.CLASSPATH);
+        return (String) CONFIG_PROPS.get(ConfigConstant.CLASS_PATH);
     }
 
+    public static String getAppHTMLPath() {
+        return (String) CONFIG_PROPS.get(ConfigConstant.HTML_PATH);
+    }
+
+    public static String getAppAssertPath() {
+        return (String) CONFIG_PROPS.get(ConfigConstant.ASSERT_PATH);
+    }
 }

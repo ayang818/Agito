@@ -23,6 +23,13 @@ public class JsonUtil {
         return JSON.toJSONString(object);
     }
 
+    public static String parse(Object object) {
+        if (object.getClass().isEnum()) {
+            return parseEnumToJson(object);
+        }
+        return parseObjectToJson(object);
+    }
+
     public static <T> T parseJsonToObject(String json, T object) {
         return (T) JSON.parseObject(json, object.getClass());
     }

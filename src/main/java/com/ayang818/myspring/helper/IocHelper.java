@@ -1,7 +1,6 @@
 package com.ayang818.myspring.helper;
 
 import com.ayang818.myspring.annotation.Inject;
-import com.ayang818.myspring.helper.BeanHelper;
 import com.ayang818.myspring.util.ReflectionUtil;
 
 import java.lang.reflect.Field;

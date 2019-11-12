@@ -1,11 +1,10 @@
 package com.ayang818.myspring.servlet;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface Serviceable {
-    Object mappingAndInvoke(HttpServletRequest request, HttpServletResponse response) throws IOException;
-    String jsonResponse(Object jsonObject);
-    Object viewResponse(Object view);
+    void mappingAndInvoke(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 }

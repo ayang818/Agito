@@ -25,4 +25,9 @@ public class Handler {
     public Method getActionMethod() {
         return this.actionMethod;
     }
+
+    @Override
+    public String toString() {
+        return actionMethod.getName();
+    }
 }

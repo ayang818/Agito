@@ -8,5 +8,7 @@ public interface ConfigConstant {
     String JDBC_PASSWORD = "myspring.framework.jdbc.password";
 
     String APP_BASE_PACKAGE = "myspring.framework.app.base_package";
-    String CLASSPATH = "myspring.framework.app.classpath";
+    String CLASS_PATH = "myspring.framework.app.classpath";
+    String HTML_PATH = "myspring.framework.app.htmlpath";
+    String ASSERT_PATH = "myspring.framework.app.assertpath";
 }
