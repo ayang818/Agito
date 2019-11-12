@@ -93,7 +93,7 @@ public class DispatchServlet extends HttpServlet implements Serviceable {
                             paramMap.put(param[0], param[1]);
                         }
                     }
-                    return null;
+                    return paramList;
                 });
             }
             // 获取URL参数
@@ -108,14 +108,17 @@ public class DispatchServlet extends HttpServlet implements Serviceable {
                         paramMap.put(entryList[0], entryList[1]);
                     }
                 }
-                return null;
+                return param;
             });
             // 使用反射调用映射函数
             Param param = new Param(paramMap);
             Method actionMethod = handler.getActionMethod();
             Object result = ReflectionUtil.invokeMethod(bean, actionMethod, param);
-            // 判断返回类型注解注解，返回视图
-            if (actionMethod.isAnnotationPresent(ResponseView.class) || result instanceof View) {
+            // 判断返回类型注解注解，返回视图, 该版本逻辑是注解和返回类型匹配才会返回成功, 为的是处理Json or View这种情况
+            boolean isResponseViewPresent = actionMethod.isAnnotationPresent(ResponseView.class);
+            boolean isResponseBodyPresent = actionMethod.isAnnotationPresent(ResponseBody.class);
+
+            if (isResponseViewPresent && result instanceof View) {
                 View view = (View) result;
                 if (view.getPath().startsWith("/")) {
                     response.sendRedirect(request.getContextPath() + view.getPath());
@@ -127,14 +130,26 @@ public class DispatchServlet extends HttpServlet implements Serviceable {
                 request.getRequestDispatcher(ConfigHelper.getAppHTMLPath()+view.getPath()).forward(request, response);
             }
             // 返回Json数据
-            if (actionMethod.isAnnotationPresent(ResponseBody.class) || result instanceof Json) {
+            if (isResponseBodyPresent && result instanceof Json) {
                 Json json = (Json) result;
                 PrintWriter writer = response.getWriter();
                 writer.write(JsonUtil.parse(json));
                 writer.flush();
                 writer.close();
+                return;
+            }
+            String annotationType = null;
+            if (isResponseViewPresent) {
+                annotationType = ResponseView.class.getName();
+            }
+            if (isResponseBodyPresent) {
+                annotationType = ResponseBody.class.getName();
+            }
+            try {
+                throw new ClassCastException("result class does not match the annotation type "+annotationType+"");
+            } catch (ClassCastException e) {
+                LOGGER.error(e.getMessage());
             }
         }
     }
-
 }
