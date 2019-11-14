@@ -15,7 +15,7 @@
     <packaging>war</packaging>
 
     <groupId>com.ayang818.agito</groupId>
-    <artifactId>1.0</artifactId>
+    <artifactId>com.ayang818.agitoframework</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
